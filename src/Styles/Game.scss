@@ -1,0 +1,322 @@
+.game {
+    --color-border: rgb(4, 67, 255);
+
+    &-container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+
+        .game-field {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timer {
+            position: absolute;
+            height: 200px;
+            width: 200px;
+            left: 10vw;
+        }
+
+
+        .gameOver {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 40px;
+
+            .pacman-lost {
+                background-image: url('../Assets/Sprites.png');
+                height: 40px;
+                width: 40px;
+                transform: scale(3);
+                margin-top: 20vh;
+            }
+
+            &-title {
+                font-family: var(--mainFont);
+                color: yellow;
+                text-shadow: 4px 4px blue;
+                font-size: 50px;
+            }
+        }
+
+
+
+        .game-menu {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-around;
+            gap: 100px;
+            padding-top: 30px;
+
+            &_score {
+                font-family: var(--mainFont);
+                font-size: 25px;
+                color: yellow;
+                text-shadow: 2px 2px rgb(51, 0, 255);
+                text-align: center;
+                line-height: 200%;
+                margin: 0;
+            }
+
+            &_container {
+                display: flex;
+                align-items: center;
+                gap: 50px;
+            }
+
+            .restart-btn {
+                width: fit-content;
+                height: fit-content;
+                transition: all .5s linear;
+
+                * {
+                    &:hover {
+                        background-color: yellow;
+                    }
+                }
+            }
+
+            .isRestart {
+                * {
+                    animation: rotateReload 2s linear;
+                }
+            }
+        }
+
+
+        .field-container {
+            background-color: rgba(21, 28, 73, 0.49);
+            position: relative;
+            overflow: hidden;
+            border: 5px solid var(--color-border);
+            box-shadow: 0px 0px 30px 15px black;
+            transform: scale(.9);
+
+
+            .fruits {
+                inset: 0;
+                position: absolute;
+
+                &-container {
+                    height: 100%;
+                    position: relative;
+                }
+
+                &__item {
+                    position: absolute;
+                    height: 50px;
+                    width: 50px;
+                    background-image: url(../Assets/Sprites.png);
+                    background-position: 67% 0%;
+                }
+            }
+
+            .obstacles {
+                height: 100%;
+                position: relative;
+
+                &__item {
+                    position: absolute;
+                    left: 0;
+                    height: 50px;
+                    width: 50px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 3px solid rgb(0, 0, 0);
+                    box-sizing: border-box;
+                    background-color: var(--color-border);
+                }
+            }
+
+            .pacman {
+                transition: top .5s linear, left .5s linear;
+                position: absolute;
+                z-index: 6;
+                background-image: url('../Assets/Sprites.png');
+            }
+
+            .enemy {
+                transition: top 1s linear, left 1s linear;
+                position: absolute;
+                z-index: 7;
+                background-image: url('../Assets/Sprites.png');
+            }
+
+            .coins {
+                position: absolute;
+                inset: 0;
+
+                &-container {
+                    position: relative;
+                    height: 100%;
+
+                    &__item {
+                        position: absolute;
+                        height: 50px;
+                        width: 50px;
+                        z-index: 5;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        .coins__item {
+                            background-color: rgb(236, 207, 77);
+                            border-radius: 50%;
+                            height: 8px;
+                            width: 8px;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        @media ( max-height: 800px) {
+            .field-container {
+                transform: scale(.7) translateY(-100px);
+            }
+        }
+
+        @media ( max-height: 700px) {
+            .field-container {
+                transform: scale(.5) translateY(-250px);
+            }
+        }
+
+
+    }
+}
+
+.pie-timer {
+    width: 220px;
+    transform: scale(.8);
+    height: 220px;
+    position: relative;
+    box-shadow: #edff76 0 0 25px;
+    -webkit-border-radius: 200px;
+    margin: 20px;
+    display: inline-block;
+
+    .timer-l,
+    .timer-r {
+        border-radius: 300px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 15;
+        border: 30px solid greenyellow;
+        width: 140px;
+        height: 140px;
+        margin-left: -100px;
+        margin-top: -100px;
+        border-left-color: transparent;
+        border-top-color: transparent;
+        -webkit-animation-duration: 15s;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-direction: alternate;
+    }
+
+    .timer-l {
+        -webkit-animation-name: timer-slide;
+        -webkit-animation-timing-function: ease-in;
+        z-index: 5;
+        left: 0;
+    }
+
+    .timer-r {
+        -webkit-animation-name: timer-toggle;
+        -webkit-animation-timing-function: ease-out;
+    }
+
+    .timer-slot {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        overflow: hidden;
+    }
+
+    .pie-timer .timer-l,
+    .pie-timer .timer-r {
+        height: 0;
+        width: 0;
+        margin: -100px 0 0 -100px;
+        border-width: 100px;
+        -webkit-animation-duration: 15s;
+    }
+}
+
+
+@keyframes timer-slide {
+    0% {
+        -webkit-transform: rotate(-225deg);
+    }
+
+    50% {
+        -webkit-transform: rotate(-45deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(-45deg);
+    }
+}
+
+@keyframes timer-toggle {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    51% {
+        -webkit-transform: rotate(-45deg);
+        opacity: 1;
+    }
+
+    75% {
+        border-top-color: transparent;
+    }
+
+    76% {
+        border-top-color: greenyellow;
+    }
+
+    100% {
+        -webkit-transform: rotate(137deg);
+        opacity: 1;
+        border-top-color: greenyellow;
+    }
+}
+
+
+
+@keyframes rotateReload {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes countdown {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
